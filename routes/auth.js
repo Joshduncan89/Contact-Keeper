@@ -14,7 +14,7 @@ const User = require("../models/User");
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
-    res.json(user);
+    res.json({ user });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("server error");
@@ -27,7 +27,7 @@ router.get("/", auth, async (req, res) => {
 router.post(
   "/",
   [
-    check("password", "please incluce valid password").exists(),
+    check("password", "please include valid password").exists(),
     check("email", "invalid email").isEmail(),
   ],
   async (req, res) => {
